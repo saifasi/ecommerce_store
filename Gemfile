@@ -51,6 +51,32 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Front-end
+gem 'bootstrap', '~> 5.2'
+gem 'jquery-rails'
+gem 'sass-rails', '>= 6.0'
+
+# Authentication & Admin
+gem 'devise'
+gem 'activeadmin', '~> 2.11'
+
+# Pagination & Search
+gem 'kaminari'
+gem 'breadcrumbs_on_rails'
+
+# File uploads & processing
+gem 'image_processing', '~> 1.2'
+gem 'aws-sdk-s3', require: false
+
+# Payments
+gem 'stripe'
+
+# Thread safety & patches
+gem 'mutex_m'
+
+# Testing & QA
+gem 'rubocop', require: false
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
