@@ -124,6 +124,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    csv (3.3.4)
     date (3.4.1)
     debug (1.10.0)
       irb (~> 1.10)
@@ -375,6 +376,7 @@ DEPENDENCIES
   breadcrumbs_on_rails
   capybara
   cssbundling-rails
+  csv
   debug
   devise
   image_processing (~> 1.2)
