@@ -102,6 +102,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.4.0)
+    bigdecimal (3.1.9)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -368,6 +369,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin (~> 2.11)
   aws-sdk-s3
+  bigdecimal
   bootsnap
   bootstrap (~> 5.2)
   breadcrumbs_on_rails
