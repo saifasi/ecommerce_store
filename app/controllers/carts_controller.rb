@@ -6,8 +6,7 @@ class CartsController < ApplicationController
   end
 
   def add
-    @cart[params[:product_id].to_s] ||= 0
-    @cart[params[:product_id].to_s] += 1
+    @cart[pid = params[:product_id].to_s] = (@cart[pid] || 0) + 1
     session[:cart] = @cart
     redirect_to cart_path, notice: 'Added to cart.'
   end
@@ -25,8 +24,9 @@ class CartsController < ApplicationController
   end
 
   private
-    def initialize_cart
-      session[:cart] ||= {}
-      @cart = session[:cart]
-    end
+
+  def initialize_cart
+    session[:cart] ||= {}
+    @cart = session[:cart]
+  end
 end
