@@ -8,21 +8,18 @@ class OrdersController < ApplicationController
 
   def new
     redirect_to root_path, alert: 'Cart is empty.' if @cart.empty?
+    @order = Order.new
   end
 
   def create
     @order = current_user.orders.build(status: 'pending', total_price: 0)
     @cart.each do |pid, qty|
       prod = Product.find(pid)
-      @order.order_items.build(
-        product: prod,
-        quantity: qty,
-        purchase_price: prod.price
-      )
+      @order.order_items.build(product: prod, quantity: qty, purchase_price: prod.price)
       @order.total_price += prod.price * qty
     end
-    tax_rate = current_user.province.slice(:gst_rate, :pst_rate, :hst_rate).values.sum / 100.0
-    @order.total_price *= (1 + tax_rate)
+    tax_pct = current_user.province.gst_rate + current_user.province.pst_rate + current_user.province.hst_rate
+    @order.total_price *= (1 + tax_pct / 100.0)
     if @order.save
       session[:cart] = {}
       redirect_to @order, notice: 'Order placed successfully.'
@@ -44,15 +41,16 @@ class OrdersController < ApplicationController
       source: params[:stripeToken],
       description: "Order ##{@order.id}"
     )
-    @order.update(status: 'paid', stripe_charge_id: charge.id)
+    @order.update!(status: 'paid', stripe_charge_id: charge.id)
     redirect_to @order, notice: 'Payment successful.'
   rescue Stripe::CardError => e
     redirect_to @order, alert: e.message
   end
 
   private
-    def load_cart
-      session[:cart] ||= {}
-      @cart = session[:cart]
-    end
+
+  def load_cart
+    session[:cart] ||= {}
+    @cart = session[:cart]
+  end
 end
